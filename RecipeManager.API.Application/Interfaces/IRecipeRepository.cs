@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using RecipeManager.Domain.Entities;
+using RecipeManager.API.Domain.Entities;
 
-namespace RecipeManager.Application.Interfaces
+namespace RecipeManager.API.Application.Interfaces
 {
     public interface IRecipeRepository
     {

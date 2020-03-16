@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace RecipeManager.Persistence.EntityFramework
+namespace RecipeManager.API.Persistence.EntityFramework
 {
     public class GenericRepository<TEntity> where TEntity : class
     {

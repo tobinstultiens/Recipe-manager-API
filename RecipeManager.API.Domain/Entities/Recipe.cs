@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace RecipeManager.Domain.Entities
+namespace RecipeManager.API.Domain.Entities
 {
     public class Recipe
     {

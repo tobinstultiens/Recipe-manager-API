@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RecipeManager.Application\RecipeManager.Application.csproj" />
+      <ProjectReference Include="..\RecipeManager.API.Domain\RecipeManager.API.Domain.csproj" />
     </ItemGroup>
 
 </Project>

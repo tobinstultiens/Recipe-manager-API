@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RecipeManager.Domain.Entities
+namespace RecipeManager.API.Domain.Entities
 {
     public class RecipeTime
     {
