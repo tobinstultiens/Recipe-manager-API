@@ -1,8 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RecipeManager.API.Domain.Entities;
 
-namespace RecipeManager.API.Persistence.EntityFramework
+namespace RecipeManager.API.Persistence.EntityFramework.Contexts
 {
+    /// <summary>
+    /// This class represents the <see cref="RecipeContext"/> class.
+    /// </summary>
     public class RecipeContext : DbContext
     {
         public DbSet<Recipe> Recipes { get; set; }

@@ -8,7 +8,7 @@ namespace RecipeManager.API.Application.Interfaces
         IEnumerable<Recipe> GetRecipes();
         Recipe GetRecipeById(int recipeId);
         void InsertRecipe(Recipe recipe);
-        void DeleteRecipe(int recipeID);
+        void DeleteRecipe(int recipeId);
         void UpdateRecipe(Recipe student);
         void Save();
     }
