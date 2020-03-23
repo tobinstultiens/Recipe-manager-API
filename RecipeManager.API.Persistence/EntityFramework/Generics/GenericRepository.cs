@@ -14,8 +14,8 @@ namespace RecipeManager.API.Persistence.EntityFramework.Generics
 
         public GenericRepository(RecipeContext context)
         {
-            this.Context = context;
-            this.DbSet = context.Set<TEntity>();
+            Context = context;
+            DbSet = context.Set<TEntity>();
         }
 
         public virtual IEnumerable<TEntity> Get(

@@ -20,9 +20,9 @@ namespace RecipeManager.API.Persistence.EntityFramework
         {
             get
             {
-                if (this._ingredientRepository == null)
+                if (_ingredientRepository == null)
                 {
-                    this._ingredientRepository = new GenericRepository<Ingredient>(_context);
+                    _ingredientRepository = new GenericRepository<Ingredient>(_context);
                 }
                 return _ingredientRepository;
             }
@@ -32,9 +32,9 @@ namespace RecipeManager.API.Persistence.EntityFramework
         {
             get
             {
-                if (this._recipeRepository == null)
+                if (_recipeRepository == null)
                 {
-                    this._recipeRepository = new GenericRepository<Recipe>(_context);
+                    _recipeRepository = new GenericRepository<Recipe>(_context);
                 }
                 return _recipeRepository;
             }
@@ -73,14 +73,14 @@ namespace RecipeManager.API.Persistence.EntityFramework
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this._disposed)
+            if (!_disposed)
             {
                 if (disposing)
                 {
                     _context.Dispose();
                 }
             }
-            this._disposed = true;
+            _disposed = true;
         }
 
         public void Dispose()
