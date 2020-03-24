@@ -5,6 +5,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="NLog" Version="4.7.0" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\RecipeManager.API.Persistence\RecipeManager.API.Persistence.csproj" />
     </ItemGroup>
 

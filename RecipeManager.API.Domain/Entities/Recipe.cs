@@ -13,5 +13,7 @@ namespace RecipeManager.API.Domain.Entities
         public RecipeTime RecipeTime { get; set; }
         public string ImgLink { get; set; }
         public string VideoLink { get; set; }
+        public DateTime CreationDateTime { get; set; }
+        public DateTime LastUpdatedDateTime { get; set; }
     }
 }
