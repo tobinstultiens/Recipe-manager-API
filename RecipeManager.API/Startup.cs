@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,8 +26,7 @@ namespace RecipeManager.API
         {
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<UnitOfWork>();
-
-            services.AddDbContext<RecipeContext>();
+            services.AddEntityFrameworkNpgsql().AddDbContext<RecipeContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("PostgresConnectionString")));
 
             services.AddControllers();
         }
