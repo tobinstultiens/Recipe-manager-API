@@ -1,7 +1,7 @@
-﻿using System;
-using RecipeManager.API.Domain.Entities;
+﻿using RecipeManager.API.Domain.Entities;
 using RecipeManager.API.Persistence.EntityFramework.Contexts;
 using RecipeManager.API.Persistence.EntityFramework.Generics;
+using System;
 
 namespace RecipeManager.API.Persistence.EntityFramework
 {

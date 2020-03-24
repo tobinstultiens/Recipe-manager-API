@@ -1,4 +1,5 @@
-﻿using RecipeManager.API.Domain.Entities;
+﻿using RecipeManager.API.Application.Interfaces;
+using RecipeManager.API.Domain.Entities;
 using RecipeManager.API.Persistence.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 
 namespace RecipeManager.API.Infrastructure.Services
 {
-    public class RecipeService
+    public class RecipeService : IRecipeService
     {
         private readonly UnitOfWork _unitOfWork;
 

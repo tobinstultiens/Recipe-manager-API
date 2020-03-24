@@ -9,6 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\RecipeManager.API.Application\RecipeManager.API.Application.csproj" />
       <ProjectReference Include="..\RecipeManager.API.Persistence\RecipeManager.API.Persistence.csproj" />
     </ItemGroup>
 

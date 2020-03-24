@@ -4,6 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RecipeManager.API.Application.Interfaces;
+using RecipeManager.API.Infrastructure.Services;
+using RecipeManager.API.Persistence.EntityFramework;
+using RecipeManager.API.Persistence.EntityFramework.Contexts;
 
 namespace RecipeManager.API
 {
@@ -19,6 +23,11 @@ namespace RecipeManager.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IRecipeService, RecipeService>();
+            services.AddScoped<UnitOfWork>();
+
+            services.AddDbContext<RecipeContext>();
+
             services.AddControllers();
         }
 

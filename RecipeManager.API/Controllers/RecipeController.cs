@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RecipeManager.API.Application.Interfaces;
 using RecipeManager.API.Domain.Entities;
-using RecipeManager.API.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 
@@ -10,9 +10,9 @@ namespace RecipeManager.API.Controllers
     [ApiController]
     public class RecipeController : ControllerBase
     {
-        private RecipeService _recipeService;
+        private IRecipeService _recipeService;
 
-        public RecipeController(RecipeService recipeService)
+        public RecipeController(IRecipeService recipeService)
         {
             _recipeService = recipeService;
         }
