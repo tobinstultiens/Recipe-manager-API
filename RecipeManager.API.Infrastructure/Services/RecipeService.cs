@@ -44,11 +44,17 @@ namespace RecipeManager.API.Infrastructure.Services
             return null;
         }
 
-        public List<Recipe> GetRecipes()
+        public List<Recipe> GetRecipes(int size, int page)
         {
             try
             {
-                return _unitOfWork.RecipeRepository.Get(orderBy: q => q.OrderByDescending(d => d.CreationDateTime)).ToList();
+                return _unitOfWork.RecipeRepository
+                    //Keeping this commented in case it's needed.
+                    .Get(/*orderBy: q => q.OrderByDescending(d => d.CreationDateTime)*/)
+                    //This will mean it will have to start with 1 otherwise it will return a error
+                    .Skip(size * (page - 1))
+                    .Take(size)
+                    .ToList();
             }
             catch (Exception)
             {

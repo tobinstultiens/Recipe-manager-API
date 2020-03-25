@@ -3,6 +3,7 @@ using RecipeManager.API.Application.Interfaces;
 using RecipeManager.API.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using RecipeManager.API.ViewModels;
 
 namespace RecipeManager.API.Controllers
 {
@@ -19,9 +20,9 @@ namespace RecipeManager.API.Controllers
 
         // GET: api/Recipe
         [HttpGet]
-        public List<Recipe> Get()
+        public List<Recipe> Get([FromQuery]Paging paging)
         {
-            return _recipeService.GetRecipes();
+            return _recipeService.GetRecipes(paging.Size, paging.Page);
         }
 
         // GET: api/Recipe/5
