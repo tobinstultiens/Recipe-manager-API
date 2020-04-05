@@ -9,9 +9,9 @@ namespace RecipeManager.API.Application.Interfaces
         Recipe GetRecipe(Guid id);
         List<Recipe> GetRecipes(string recipeTitle);
         List<Recipe> GetRecipes(int size, int page);
-        void CreateRecipe(Recipe recipe);
-        void UpdateRecipe(Recipe recipe);
-        void DeleteRecipe(Recipe recipe);
-        void DeleteRecipe(Guid id);
+        bool CreateRecipe(Recipe recipe);
+        bool UpdateRecipe(Recipe recipe);
+        bool DeleteRecipe(Recipe recipe);
+        bool DeleteRecipe(Guid id);
     }
 }

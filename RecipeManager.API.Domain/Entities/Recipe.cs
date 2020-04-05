@@ -4,9 +4,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RecipeManager.API.Domain.Entities
 {
+    /// <summary>
+    /// This class represents the <see cref="Recipe"/> class.
+    /// </summary>
     public class Recipe
     {
         public Guid Id { get; set; }
+        [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
@@ -21,5 +25,6 @@ namespace RecipeManager.API.Domain.Entities
         public string VideoLink { get; set; }
         public DateTime CreationDateTime { get; set; }
         public DateTime LastUpdatedDateTime { get; set; }
+        public Guid UserId { get; set; }
     }
 }

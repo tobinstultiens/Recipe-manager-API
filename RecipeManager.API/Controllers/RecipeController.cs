@@ -2,7 +2,8 @@
 using RecipeManager.API.Application.Interfaces;
 using RecipeManager.API.Domain.Entities;
 using System;
-using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Extensions.Logging;
 using RecipeManager.API.ViewModels;
 
 namespace RecipeManager.API.Controllers
@@ -11,67 +12,55 @@ namespace RecipeManager.API.Controllers
     [ApiController]
     public class RecipeController : ControllerBase
     {
-        private IRecipeService _recipeService;
+        private readonly IRecipeService _recipeService;
+        private readonly ILogger<RecipeController> _logger;
 
-        public RecipeController(IRecipeService recipeService)
+        public RecipeController(IRecipeService recipeService, ILogger<RecipeController> logger)
         {
             _recipeService = recipeService;
+            _logger = logger;
         }
 
         // GET: api/Recipe
         [HttpGet]
-        public List<Recipe> Get([FromQuery]Paging paging)
+        public IActionResult Get([FromQuery] Paging paging)
         {
-            return _recipeService.GetRecipes(paging.Size, paging.Page);
+            var result = _recipeService.GetRecipes(paging.Size, paging.Page);
+            return result == null ? (IActionResult) new NotFoundResult() : new OkObjectResult(result);
         }
 
         // GET: api/Recipe/5
         [HttpGet("{id}", Name = "Get")]
-        public Recipe Get(Guid id)
+        public IActionResult Get(Guid id)
         {
-            return _recipeService.GetRecipe(id);
+            var result = _recipeService.GetRecipe(id);
+            return result == null ? (IActionResult) new NotFoundResult() : new OkObjectResult(result);
         }
 
         // POST: api/Recipe
         [HttpPost]
-        public void Post([FromBody] Recipe recipe)
+        public IActionResult Post([FromBody] Recipe recipe)
         {
-            try
-            {
-                _recipeService.CreateRecipe(recipe);
-            }
-            catch (Exception)
-            {
-
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
+            bool success = _recipeService.CreateRecipe(recipe);
+            return success ? (IActionResult) new BadRequestResult() : new AcceptedResult();
         }
 
         // PUT: api/Recipe/5
         [HttpPut]
-        public void Put([FromBody] Recipe value)
+        public IActionResult Put([FromBody] Recipe value)
         {
-            try
-            {
-                _recipeService.UpdateRecipe(value);
-            }
-            catch (Exception)
-            {
-
-            }
+            bool success = _recipeService.UpdateRecipe(value);
+            return success ? (IActionResult) new BadRequestResult() : new AcceptedResult();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public IActionResult Delete(Guid id)
         {
-            try
-            {
-                _recipeService.DeleteRecipe(id);
-            }
-            catch (Exception)
-            {
-
-            }
+            bool success = _recipeService.DeleteRecipe(id);
+            return success ? (IActionResult) new BadRequestResult() : new AcceptedResult();
         }
     }
 }
