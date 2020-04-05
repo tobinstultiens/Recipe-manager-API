@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 using RecipeManager.API.Domain.Entities;
 
 namespace RecipeManager.API.Persistence.EntityFramework.Contexts
@@ -8,6 +10,7 @@ namespace RecipeManager.API.Persistence.EntityFramework.Contexts
     /// </summary>
     public class RecipeContext : DbContext
     {
+        public static readonly LoggerFactory MyLoggerFactory = new LoggerFactory(new ILoggerProvider[]{new NLogLoggerProvider()});
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Direction> Directions { get; set; }
         public DbSet<RecipeTime> RecipeTimes { get; set; }
@@ -15,7 +18,7 @@ namespace RecipeManager.API.Persistence.EntityFramework.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase("Test");
+            optionsBuilder.UseInMemoryDatabase("Test").UseLoggerFactory(MyLoggerFactory);
         }
     }
 }
