@@ -13,12 +13,10 @@ namespace RecipeManager.API.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly IRecipeService _recipeService;
-        private readonly ILogger<RecipeController> _logger;
 
-        public RecipeController(IRecipeService recipeService, ILogger<RecipeController> logger)
+        public RecipeController(IRecipeService recipeService)
         {
             _recipeService = recipeService;
-            _logger = logger;
         }
 
         // GET: api/Recipe
