@@ -3,7 +3,6 @@ using RecipeManager.API.Application.Interfaces;
 using RecipeManager.API.Domain.Entities;
 using System;
 using System.Linq;
-using Microsoft.Extensions.Logging;
 using RecipeManager.API.ViewModels;
 
 namespace RecipeManager.API.Controllers
