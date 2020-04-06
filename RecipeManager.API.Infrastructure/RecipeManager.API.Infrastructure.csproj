@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NLog" Version="4.7.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RecipeManager.API.Application\RecipeManager.API.Application.csproj" />
+      <ProjectReference Include="..\RecipeManager.API.Persistence\RecipeManager.API.Persistence.csproj" />
+    </ItemGroup>
+
+</Project>
