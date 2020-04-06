@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RecipeManager.API.Domain\RecipeManager.API.Domain.csproj" />
+      <ProjectReference Include="..\RecipeManager.API.Persistence\RecipeManager.API.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="9.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.2" />
+    </ItemGroup>
+
+</Project>
