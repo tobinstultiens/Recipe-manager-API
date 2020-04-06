@@ -7,6 +7,9 @@ using RecipeManager.API.ViewModels;
 
 namespace RecipeManager.API.Controllers
 {
+    /// <summary>
+    /// The recipe controller
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class RecipeController : ControllerBase
@@ -18,7 +21,11 @@ namespace RecipeManager.API.Controllers
             _recipeService = recipeService;
         }
 
-        // GET: api/Recipe
+        /// <summary>
+        /// Get the recipe with the help of pagination
+        /// </summary>
+        /// <param name="paging">pagination parameter</param>
+        /// <returns>this returns a list of recipes</returns>
         [HttpGet]
         public IActionResult Get([FromQuery] Paging paging)
         {
@@ -26,7 +33,11 @@ namespace RecipeManager.API.Controllers
             return result == null ? (IActionResult) new NotFoundResult() : new OkObjectResult(result);
         }
 
-        // GET: api/Recipe/5
+        /// <summary>
+        /// Get the specific recipe specified with the guid
+        /// </summary>
+        /// <param name="id">Guid parameter</param>
+        /// <returns>Return that specific recipe</returns>
         [HttpGet("{id}", Name = "Get")]
         public IActionResult Get(Guid id)
         {
@@ -34,7 +45,11 @@ namespace RecipeManager.API.Controllers
             return result == null ? (IActionResult) new NotFoundResult() : new OkObjectResult(result);
         }
 
-        // POST: api/Recipe
+        /// <summary>
+        /// Creates the recipe
+        /// </summary>
+        /// <param name="recipe">The recipe that is created</param>
+        /// <returns>return if it succeeded or not</returns>
         [HttpPost]
         public IActionResult Post([FromBody] Recipe recipe)
         {
@@ -44,15 +59,23 @@ namespace RecipeManager.API.Controllers
             return success ? (IActionResult) new BadRequestResult() : new AcceptedResult();
         }
 
-        // PUT: api/Recipe/5
+        /// <summary>
+        /// Update the recipe object specified in this request.
+        /// </summary>
+        /// <param name="recipe">The object that needs to be updated</param>
+        /// <returns>Returns the result of this request</returns>
         [HttpPut]
-        public IActionResult Put([FromBody] Recipe value)
+        public IActionResult Put([FromBody] Recipe recipe)
         {
-            bool success = _recipeService.UpdateRecipe(value);
+            bool success = _recipeService.UpdateRecipe(recipe);
             return success ? (IActionResult) new BadRequestResult() : new AcceptedResult();
         }
 
-        // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// Delete the specified recipe.
+        /// </summary>
+        /// <param name="id">The id of the recipe</param>
+        /// <returns>returns if it succeeded with the removal of this recipe</returns>
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {

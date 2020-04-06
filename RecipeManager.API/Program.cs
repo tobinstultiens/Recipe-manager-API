@@ -6,7 +6,7 @@ using NLog.Web;
 
 namespace RecipeManager.API
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -29,7 +29,7 @@ namespace RecipeManager.API
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

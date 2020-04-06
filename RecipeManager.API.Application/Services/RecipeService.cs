@@ -10,6 +10,7 @@ using RecipeManager.API.Persistence.EntityFramework;
 
 namespace RecipeManager.API.Application.Services
 {
+    /// <inheritdoc cref="IRecipeService"/>
     public class RecipeService : IRecipeService
     {
         private readonly UnitOfWork _unitOfWork;

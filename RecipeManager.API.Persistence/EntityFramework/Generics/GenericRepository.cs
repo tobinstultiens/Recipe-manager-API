@@ -7,23 +7,23 @@ using System.Linq.Expressions;
 
 namespace RecipeManager.API.Persistence.EntityFramework.Generics
 {
-    public class GenericRepository<TEntity> where TEntity : class
+    public sealed class GenericRepository<TEntity> where TEntity : class
     {
-        internal RecipeContext Context;
-        internal DbSet<TEntity> DbSet;
+        private readonly RecipeContext _context;
+        private readonly DbSet<TEntity> _dbSet;
 
         public GenericRepository(RecipeContext context)
         {
-            Context = context;
-            DbSet = context.Set<TEntity>();
+            _context = context;
+            _dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(
+        public IEnumerable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
         {
-            IQueryable<TEntity> query = DbSet;
+            IQueryable<TEntity> query = _dbSet;
 
             if (filter != null)
             {
@@ -43,35 +43,35 @@ namespace RecipeManager.API.Persistence.EntityFramework.Generics
             return query.ToList();
         }
 
-        public virtual TEntity GetById(object id)
+        public TEntity GetById(object id)
         {
-            return DbSet.Find(id);
+            return _dbSet.Find(id);
         }
 
-        public virtual void Insert(TEntity entity)
+        public void Insert(TEntity entity)
         {
-            DbSet.Add(entity);
+            _dbSet.Add(entity);
         }
 
-        public virtual void Delete(object id)
+        public void Delete(object id)
         {
-            TEntity entityToDelete = DbSet.Find(id);
+            TEntity entityToDelete = _dbSet.Find(id);
             Delete(entityToDelete);
         }
 
-        public virtual void Delete(TEntity entityToDelete)
+        public void Delete(TEntity entityToDelete)
         {
-            if (Context.Entry(entityToDelete).State == EntityState.Detached)
+            if (_context.Entry(entityToDelete).State == EntityState.Detached)
             {
-                DbSet.Attach(entityToDelete);
+                _dbSet.Attach(entityToDelete);
             }
-            DbSet.Remove(entityToDelete);
+            _dbSet.Remove(entityToDelete);
         }
 
-        public virtual void Update(TEntity entityToUpdate)
+        public void Update(TEntity entityToUpdate)
         {
-            DbSet.Attach(entityToUpdate);
-            Context.Entry(entityToUpdate).State = EntityState.Modified;
+            _dbSet.Attach(entityToUpdate);
+            _context.Entry(entityToUpdate).State = EntityState.Modified;
         }
     }
 }

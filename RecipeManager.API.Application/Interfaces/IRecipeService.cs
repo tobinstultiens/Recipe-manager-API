@@ -5,6 +5,9 @@ using RecipeManager.API.Application.Dtos;
 
 namespace RecipeManager.API.Application.Interfaces
 {
+    /// <summary>
+    /// The interface that defines the recipe service methods.
+    /// </summary>
     public interface IRecipeService
     {
         Recipe GetRecipe(Guid id);

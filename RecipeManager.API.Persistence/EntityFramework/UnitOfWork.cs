@@ -8,7 +8,7 @@ namespace RecipeManager.API.Persistence.EntityFramework
     /// <summary>
     /// Unit of work is there to make sure only a singe database context is used even with multiple repositories.
     /// </summary>
-    public class UnitOfWork : IDisposable
+    public sealed class UnitOfWork : IDisposable
     {
         private readonly RecipeContext _context = new RecipeContext();
         private GenericRepository<Ingredient> _ingredientRepository;
@@ -16,53 +16,13 @@ namespace RecipeManager.API.Persistence.EntityFramework
         private GenericRepository<RecipeTime> _recipeTimeRepository;
         private GenericRepository<Direction> _directionRepository;
 
-        public GenericRepository<Ingredient> IngredientRepository
-        {
-            get
-            {
-                if (_ingredientRepository == null)
-                {
-                    _ingredientRepository = new GenericRepository<Ingredient>(_context);
-                }
-                return _ingredientRepository;
-            }
-        }
+        public GenericRepository<Ingredient> IngredientRepository => _ingredientRepository ??= new GenericRepository<Ingredient>(_context);
 
-        public GenericRepository<Recipe> RecipeRepository
-        {
-            get
-            {
-                if (_recipeRepository == null)
-                {
-                    _recipeRepository = new GenericRepository<Recipe>(_context);
-                }
-                return _recipeRepository;
-            }
-        }
+        public GenericRepository<Recipe> RecipeRepository => _recipeRepository ??= new GenericRepository<Recipe>(_context);
 
-        public GenericRepository<RecipeTime> RecipeTimeRepository
-        {
-            get
-            {
-                if (_recipeTimeRepository == null)
-                {
-                    _recipeTimeRepository = new GenericRepository<RecipeTime>(_context);
-                }
-                return _recipeTimeRepository;
-            }
-        }
+        public GenericRepository<RecipeTime> RecipeTimeRepository => _recipeTimeRepository ??= new GenericRepository<RecipeTime>(_context);
 
-        public GenericRepository<Direction> DirectionRepository
-        {
-            get
-            {
-                if (_directionRepository == null)
-                {
-                    _directionRepository = new GenericRepository<Direction>(_context);
-                }
-                return _directionRepository;
-            }
-        }
+        public GenericRepository<Direction> DirectionRepository => _directionRepository ??= new GenericRepository<Direction>(_context);
 
         public void Save()
         {
@@ -71,7 +31,7 @@ namespace RecipeManager.API.Persistence.EntityFramework
 
         private bool _disposed = false;
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!_disposed)
             {
