@@ -1,22 +1,26 @@
-﻿using RecipeManager.API.Application.Interfaces;
-using RecipeManager.API.Domain.Entities;
-using RecipeManager.API.Persistence.EntityFramework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
+using RecipeManager.API.Application.Dtos;
+using RecipeManager.API.Application.Interfaces;
+using RecipeManager.API.Domain.Entities;
+using RecipeManager.API.Persistence.EntityFramework;
 
-namespace RecipeManager.API.Infrastructure.Services
+namespace RecipeManager.API.Application.Services
 {
     public class RecipeService : IRecipeService
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly ILogger<RecipeService> _logger;
+        private readonly IMapper _mapper;
 
-        public RecipeService(UnitOfWork unitOfWork, ILogger<RecipeService> logger)
+        public RecipeService(UnitOfWork unitOfWork, ILogger<RecipeService> logger, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public Recipe GetRecipe(Guid id)
@@ -33,11 +37,11 @@ namespace RecipeManager.API.Infrastructure.Services
             return null;
         }
 
-        public List<Recipe> GetRecipes(string recipeTitle)
+        public List<RecipeDto> GetRecipes(string recipeTitle)
         {
             try
             {
-                return _unitOfWork.RecipeRepository.Get(recipe => recipe.Title.Contains(recipeTitle)).ToList();
+                return _mapper.Map<List<RecipeDto>>(_unitOfWork.RecipeRepository.Get(recipe => recipe.Title.Contains(recipeTitle)).ToList());
             }
             catch (Exception e)
             {
@@ -47,17 +51,17 @@ namespace RecipeManager.API.Infrastructure.Services
             return null;
         }
 
-        public List<Recipe> GetRecipes(int size, int page)
+        public List<RecipeDto> GetRecipes(int size, int page)
         {
             try
             {
-                return _unitOfWork.RecipeRepository
+                return _mapper.Map<List<RecipeDto>>(_unitOfWork.RecipeRepository
                     //Keeping this commented in case it's needed.
                     .Get( /*orderBy: q => q.OrderByDescending(d => d.CreationDateTime)*/)
                     //This will mean it will have to start with 1 otherwise it will return a error
                     .Skip(size * (page - 1))
                     .Take(size)
-                    .ToList();
+                    .ToList());
             }
             catch (Exception e)
             {

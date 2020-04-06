@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RecipeManager.API.Application.Interfaces;
-using RecipeManager.API.Infrastructure.Services;
+using RecipeManager.API.Application.Services;
+using RecipeManager.API.Infrastructure.AutomapperConfigurations;
 using RecipeManager.API.Persistence.EntityFramework;
 using RecipeManager.API.Persistence.EntityFramework.Contexts;
 
@@ -27,6 +29,7 @@ namespace RecipeManager.API
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<UnitOfWork>();
             services.AddEntityFrameworkNpgsql().AddDbContext<RecipeContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("PostgresConnectionString")));
+            services.AddAutoMapper(typeof(RecipeProfile));
 
             services.AddControllers();
         }
