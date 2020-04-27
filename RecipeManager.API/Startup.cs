@@ -26,9 +26,9 @@ namespace RecipeManager.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IRecipeService, RecipeService>();
+            services.AddDbContext<RecipeContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("PostgresConnectionString")));
             services.AddScoped<UnitOfWork>();
-            services.AddEntityFrameworkNpgsql().AddDbContext<RecipeContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("PostgresConnectionString")));
+            services.AddScoped<IRecipeService, RecipeService>();
             services.AddAutoMapper(typeof(RecipeProfile));
 
             services.AddControllers();
