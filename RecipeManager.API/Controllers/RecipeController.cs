@@ -56,7 +56,7 @@ namespace RecipeManager.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
             bool success = _recipeService.CreateRecipe(recipe);
-            return success ? (IActionResult) new BadRequestResult() : new AcceptedResult();
+            return !success ? (IActionResult) new BadRequestResult() : new AcceptedResult();
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace RecipeManager.API.Controllers
         public IActionResult Put([FromBody] Recipe recipe)
         {
             bool success = _recipeService.UpdateRecipe(recipe);
-            return success ? (IActionResult) new BadRequestResult() : new AcceptedResult();
+            return !success ? (IActionResult) new BadRequestResult() : new AcceptedResult();
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace RecipeManager.API.Controllers
         public IActionResult Delete(Guid id)
         {
             bool success = _recipeService.DeleteRecipe(id);
-            return success ? (IActionResult) new BadRequestResult() : new AcceptedResult();
+            return !success ? (IActionResult) new BadRequestResult() : new AcceptedResult();
         }
     }
 }

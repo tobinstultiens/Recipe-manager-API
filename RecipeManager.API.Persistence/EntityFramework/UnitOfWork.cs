@@ -10,7 +10,7 @@ namespace RecipeManager.API.Persistence.EntityFramework
     /// </summary>
     public sealed class UnitOfWork : IDisposable
     {
-        private readonly RecipeContext _context = new RecipeContext();
+        private readonly RecipeContext _context;
         private GenericRepository<Ingredient> _ingredientRepository;
         private GenericRepository<Recipe> _recipeRepository;
         private GenericRepository<RecipeTime> _recipeTimeRepository;
@@ -30,6 +30,11 @@ namespace RecipeManager.API.Persistence.EntityFramework
         }
 
         private bool _disposed = false;
+
+        public UnitOfWork(RecipeContext context)
+        {
+            _context = context;
+        }
 
         private void Dispose(bool disposing)
         {
