@@ -31,7 +31,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file RecipeManage.API/RecipeManager.API/Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file RecipeManager.API/Dockerfile --tag my-image-name:$(date +%s)
 
   publish-docker:
     if: contains(github.ref, 'master')
