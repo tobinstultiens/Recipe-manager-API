@@ -2,12 +2,12 @@ name: .NET Core
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:  
+    - master 
+    - development
 
 jobs:
-  build:
+  build-test-dotnet:
 
     runs-on: ubuntu-latest
 
@@ -23,3 +23,16 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+
+  build-docker:
+    needs: [build-test-dotnet]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+  publish-docker:
+    if: contains(github.ref, 'master')
+    needs: [build-docker]
