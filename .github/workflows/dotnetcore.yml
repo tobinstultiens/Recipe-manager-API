@@ -46,3 +46,4 @@ jobs:
         name: kick1999/recipemanager-api
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: RecipeManager.API/Dockerfile
