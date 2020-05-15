@@ -17,8 +17,8 @@ namespace RecipeManager.API.Tests
     public class RecipeServiceTest
     {
         private AutoMocker _mocker;
-        private ILogger<RecipeService> _logger;
-        private Mock<IMapper> _mapper;
+        private readonly ILogger<RecipeService> _logger;
+        private readonly Mock<IMapper> _mapper;
 
         public RecipeServiceTest()
         {
