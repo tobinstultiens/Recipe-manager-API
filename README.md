@@ -27,6 +27,10 @@ Using the following command you can install dotnet tool globally on the latest v
 
 ## Install and Usage
 
-This command will run the recipemanager api on the 8080 port.
+This command will run the recipemanager api on the 5000 and 5001 port. Also to make use of the docker postgres database we need to connect it to a network which in this sample is called `test_network`.
 
-`docker run -d -p 8080:8080 recipemanagerapi:latest`
+`docker run -d -p 127.0.0.1:5000:443 -p 127.0.0.1:5001:80 --network test_network -e ConnectionStrings__PostgresConnectionString="Host=;Port=;Database=;Username=;Password=;" recipemanagerapi:latest`
+
+This command is to setup the postgres database.
+
+`docker run --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 127.0.0.1:5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres:11.7`

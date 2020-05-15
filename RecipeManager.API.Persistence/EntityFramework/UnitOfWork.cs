@@ -8,7 +8,7 @@ namespace RecipeManager.API.Persistence.EntityFramework
     /// <summary>
     /// Unit of work is there to make sure only a singe database context is used even with multiple repositories.
     /// </summary>
-    public sealed class UnitOfWork : IDisposable
+    public sealed class UnitOfWork : IDisposable, IUnitOfWork
     {
         private readonly RecipeContext _context;
         private GenericRepository<Ingredient> _ingredientRepository;
