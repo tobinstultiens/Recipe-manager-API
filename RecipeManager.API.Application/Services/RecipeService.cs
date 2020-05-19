@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RecipeManager.API.Application.Dtos;
 using RecipeManager.API.Application.Interfaces;
@@ -13,11 +14,11 @@ namespace RecipeManager.API.Application.Services
     /// <inheritdoc cref="IRecipeService"/>
     public class RecipeService : IRecipeService
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<RecipeService> _logger;
         private readonly IMapper _mapper;
 
-        public RecipeService(UnitOfWork unitOfWork, ILogger<RecipeService> logger, IMapper mapper)
+        public RecipeService(IUnitOfWork unitOfWork, ILogger<RecipeService> logger, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
@@ -28,7 +29,12 @@ namespace RecipeManager.API.Application.Services
         {
             try
             {
-                return _unitOfWork.RecipeRepository.GetById(id);
+                if (id != Guid.Empty)
+                {
+                    return _unitOfWork.RecipeRepository.Get(recipe => recipe.Id == id, includeProperties: "Directions,Ingredients,RecipeTime").First();
+                }
+
+                throw new ArgumentException();
             }
             catch (Exception e)
             {
@@ -42,7 +48,8 @@ namespace RecipeManager.API.Application.Services
         {
             try
             {
-                return _mapper.Map<List<RecipeDto>>(_unitOfWork.RecipeRepository.Get(recipe => recipe.Title.Contains(recipeTitle)).ToList());
+                return _mapper.Map<List<RecipeDto>>(_unitOfWork.RecipeRepository
+                    .Get(recipe => recipe.Title.Contains(recipeTitle)).ToList());
             }
             catch (Exception e)
             {
@@ -76,6 +83,8 @@ namespace RecipeManager.API.Application.Services
         {
             try
             {
+                recipe.CreationDateTime = DateTime.Now;
+                recipe.LastUpdatedDateTime = DateTime.Now;
                 _unitOfWork.RecipeRepository.Insert(recipe);
                 _unitOfWork.Save();
                 return true;
@@ -91,6 +100,7 @@ namespace RecipeManager.API.Application.Services
         {
             try
             {
+                recipe.LastUpdatedDateTime = DateTime.Now;
                 _unitOfWork.RecipeRepository.Update(recipe);
                 _unitOfWork.Save();
                 return true;
