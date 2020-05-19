@@ -14,13 +14,13 @@ using ILogger = NLog.ILogger;
 
 namespace RecipeManager.API.Tests
 {
-    public class RecipeServiceTest
+    public class RecipeContrllerTest
     {
         private AutoMocker _mocker;
         private readonly ILogger<RecipeService> _logger;
         private readonly Mock<IMapper> _mapper;
 
-        public RecipeServiceTest()
+        public RecipeContrllerTest()
         {
             //Arrange
             _mocker = new AutoMocker();
@@ -32,17 +32,10 @@ namespace RecipeManager.API.Tests
         public void GetRecipe_Success()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var recipe = new Recipe();
-            mockUnitOfWork.Setup(work => work.RecipeRepository.GetById("8008c1a4-2bd2-40c4-8bb9-f0399db32456"))
-                .Returns(recipe);
-            var recipeService = new RecipeService(mockUnitOfWork.Object, _logger, _mapper.Object);
 
             //Act
-            var result = recipeService.GetRecipe(new Guid("8008c1a4-2bd2-40c4-8bb9-f0399db32456"));
 
             //Assert
-            Assert.Equal(recipe,result);
         }
     }
 }

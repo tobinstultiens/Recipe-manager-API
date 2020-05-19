@@ -16,7 +16,7 @@ namespace RecipeManager.API.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("RecipeManager.API.Domain.Entities.Direction", b =>
@@ -76,6 +76,7 @@ namespace RecipeManager.API.Persistence.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreationDateTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
@@ -86,6 +87,7 @@ namespace RecipeManager.API.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("LastUpdatedDateTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Title")
