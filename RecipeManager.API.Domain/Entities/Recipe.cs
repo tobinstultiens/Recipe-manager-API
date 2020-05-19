@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeManager.API.Domain.Entities
 {
@@ -9,6 +10,8 @@ namespace RecipeManager.API.Domain.Entities
     /// </summary>
     public class Recipe
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid Id { get; set; }
         [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }

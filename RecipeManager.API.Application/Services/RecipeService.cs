@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RecipeManager.API.Application.Dtos;
 using RecipeManager.API.Application.Interfaces;
@@ -28,9 +29,9 @@ namespace RecipeManager.API.Application.Services
         {
             try
             {
-                if (id == Guid.Empty)
+                if (id != Guid.Empty)
                 {
-                    return _unitOfWork.RecipeRepository.GetById(id);
+                    return _unitOfWork.RecipeRepository.Get(recipe => recipe.Id == id, includeProperties: "Directions,Ingredients,RecipeTime").First();
                 }
 
                 throw new ArgumentException();
@@ -82,6 +83,8 @@ namespace RecipeManager.API.Application.Services
         {
             try
             {
+                recipe.CreationDateTime = DateTime.Now;
+                recipe.LastUpdatedDateTime = DateTime.Now;
                 _unitOfWork.RecipeRepository.Insert(recipe);
                 _unitOfWork.Save();
                 return true;
@@ -97,6 +100,7 @@ namespace RecipeManager.API.Application.Services
         {
             try
             {
+                recipe.LastUpdatedDateTime = DateTime.Now;
                 _unitOfWork.RecipeRepository.Update(recipe);
                 _unitOfWork.Save();
                 return true;

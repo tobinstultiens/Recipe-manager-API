@@ -27,8 +27,11 @@ namespace RecipeManager.API
         public void ConfigureServices(IServiceCollection services)
         {
             var test = Configuration.GetConnectionString("PostgresConnectionString");
-            services.AddDbContext<RecipeContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("PostgresConnectionString")));
-            services.AddScoped<UnitOfWork>();
+            services.AddDbContext<RecipeContext>(opt =>
+            {
+                opt.UseNpgsql(Configuration.GetConnectionString("PostgresConnectionString"));
+            });
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddAutoMapper(typeof(RecipeProfile));
 

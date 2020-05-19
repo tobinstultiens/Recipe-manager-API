@@ -3,6 +3,7 @@ using RecipeManager.API.Application.Interfaces;
 using RecipeManager.API.Domain.Entities;
 using System;
 using System.Linq;
+using Newtonsoft.Json;
 using RecipeManager.API.ViewModels;
 
 namespace RecipeManager.API.Controllers
