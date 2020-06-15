@@ -79,6 +79,26 @@ namespace RecipeManager.API.Application.Services
             return null;
         }
 
+        public List<RecipeDto> GetRecipes(int size, int page, string userId)
+        {
+            try
+            {
+                return _mapper.Map<List<RecipeDto>>(_unitOfWork.RecipeRepository
+                    //Keeping this commented in case it's needed.
+                    .Get(filter: f => f.UserId == userId)
+                    //This will mean it will have to start with 1 otherwise it will return a error
+                    .Skip(size * (page - 1))
+                    .Take(size)
+                    .ToList());
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Failed to retrieve the pagination");
+            }
+
+            return null;
+        }
+
         public bool CreateRecipe(Recipe recipe)
         {
             try

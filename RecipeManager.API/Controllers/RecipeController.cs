@@ -3,6 +3,8 @@ using RecipeManager.API.Application.Interfaces;
 using RecipeManager.API.Domain.Entities;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using RecipeManager.API.ViewModels;
 
@@ -12,6 +14,7 @@ namespace RecipeManager.API.Controllers
     /// The recipe controller
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class RecipeController : ControllerBase
     {
@@ -30,7 +33,8 @@ namespace RecipeManager.API.Controllers
         [HttpGet]
         public IActionResult Get([FromQuery] Paging paging)
         {
-            var result = _recipeService.GetRecipes(paging.Size, paging.Page);
+            string accessToken = Request.Headers[HeaderNames.Authorization].ToString().Split(" ")[1];
+            var result = _recipeService.GetRecipes(paging.Size, paging.Page, accessToken);
             return result == null ? (IActionResult) new NotFoundResult() : new OkObjectResult(result);
         }
 
