@@ -28,6 +28,6 @@ namespace RecipeManager.API.Domain.Entities
         public string VideoLink { get; set; }
         public DateTime CreationDateTime { get; set; }
         public DateTime LastUpdatedDateTime { get; set; }
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
     }
 }
