@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using RecipeManager.API.Application.Interfaces;
 using RecipeManager.API.Application.Services;
 using RecipeManager.API.Infrastructure.AutomapperConfigurations;
@@ -35,6 +37,20 @@ namespace RecipeManager.API
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddAutoMapper(typeof(RecipeProfile));
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://securetoken.google.com/recipe-manager-e0544";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = "https://securetoken.google.com/recipe-manager-e0544",
+                        ValidateAudience = true,
+                        ValidAudience = "recipe-manager-e0544",
+                        ValidateLifetime = true
+                    };
+                });
+
             services.AddControllers();
         }
 
@@ -45,10 +61,14 @@ namespace RecipeManager.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

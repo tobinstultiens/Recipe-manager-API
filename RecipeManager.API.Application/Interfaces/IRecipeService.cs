@@ -13,6 +13,7 @@ namespace RecipeManager.API.Application.Interfaces
         Recipe GetRecipe(Guid id);
         List<RecipeDto> GetRecipes(string recipeTitle);
         List<RecipeDto> GetRecipes(int size, int page);
+        List<RecipeDto> GetRecipes(int size, int page, string userId);
         bool CreateRecipe(Recipe recipe);
         bool UpdateRecipe(Recipe recipe);
         bool DeleteRecipe(Recipe recipe);
