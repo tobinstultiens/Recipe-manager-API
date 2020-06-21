@@ -33,8 +33,7 @@ namespace RecipeManager.API.Controllers
         [HttpGet]
         public IActionResult Get([FromQuery] Paging paging)
         {
-            string accessToken = Request.Headers[HeaderNames.Authorization].ToString().Split(" ")[1];
-            var result = _recipeService.GetRecipes(paging.Size, paging.Page, accessToken);
+            var result = _recipeService.GetRecipes(paging.Size, paging.Page, paging.Uid);
             return result == null ? (IActionResult) new NotFoundResult() : new OkObjectResult(result);
         }
 
